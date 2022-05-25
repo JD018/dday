@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html{
+            background-color: rgb(10, 10, 10);
+            text-align: center;
+            color: white;
+            font-family: "Courier New", "Segoe UI", "Times New Roman";
+        }
+        .time{
+            font-size: 60px;
+            /* background: linear-gradient(-45deg, #229ce2, #229ce2, #00ffff, #00ffff); Blue */
+            background: linear-gradient(-45deg, #e22222, #b8e222, #0084ff, #00ffff); /* Colorful */
+            background-size: 300%;
+            background-clip: border-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: animated_text 20s ease-in-out infinite;
+            -moz-animation: animated_text 20s ease-in-out infinite;
+            -webkit-animation: animated_text 20s ease-in-out infinite; /** Can also be 10s **/
+            transition: 1.25s;
+        }
+        @keyframes animated_text {
+            0% {background-position: 0px 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0px 50%;}
+        }
+        .date{
+            font-size: 20px;
+        }
+        .period{
+            font-size: 30px;
+        }
+        .left{
+            font-size: 30px;
+        }
+    </style>
+
+    <script>
+        var getTimeInterval;
+            var globalClass = "";
+            let currentDay = "";
+
+            getTimeInterval = setInterval(getTime,1);
+
+            let meridiem = "AM";
+            function getTime() {
+                today = new Date()
+                let hours = today.getHours();
+                if (hours > 12) {
+                    hours -= 12
+                    meridiem = "PM"
+                }
+                let millis = ((today.getMilliseconds()/1000).toFixed(3) + "").substring(2);
+                
+                document.getElementById("time").innerHTML = hours + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + millis + " " + meridiem
+                let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+                let currentMonth = months[today.getMonth()]
+                let day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+                currentDay = day[today.getDay()]
+                let specialdate = today.getDate();
+                let specialdate2 = specialdate % 10;
+                if (specialdate2 === 1) {var nth = "st";
+                } else if (specialdate2 === 2) {
+                    var nth = "nd";
+                } else if (specialdate2 === 3) {
+                    var nth = "rd";
+                } else {
+                    var nth = "th";
+                }
+                document.getElementById("fullDate").innerHTML = currentDay + ", " + currentMonth + " " + today.getDate() + nth + ", " + today.getFullYear()
+                let minuteTime = today.getHours() * 60 + today.getMinutes()
+                let minutesLeft = 0
+
+                
+                    if (minuteTime < 430) {
+                        document.getElementById("currentClass").innerHTML = "Before School | 12:00 - 7:10"
+                        minutesLeft = minuteTime - 430
+                        globalClass = "None"
+                    } else if (minuteTime >= 430 && minuteTime <= 486) {
+                        document.getElementById("currentClass").innerHTML = "Period 1 | 7:10 - 8:06"
+                        minutesLeft = minuteTime - 486
+                        globalClass = "1"
+                    } else if (minuteTime > 486 && minuteTime < 494) {
+                        document.getElementById("currentClass").innerHTML = "Period 2 Transition | 8:06 - 8:14" 
+                        minutesLeft = minuteTime - 494
+                        globalClass = "Transition"
+                    } else if (minuteTime >= 494 && minuteTime <= 550) {
+                        document.getElementById("currentClass").innerHTML = "Period 2 | 8:14 - 9:10" 
+                        minutesLeft = minuteTime - 550
+                        globalClass = "2"
+                    } else if (minuteTime > 550 && minuteTime < 558) {
+                        document.getElementById("currentClass").innerHTML = "Period 3 Transition | 9:10 - 9:18" 
+                        minutesLeft = minuteTime - 558
+                        globalClass = "Transition"
+                    } else if (minuteTime >= 558 && minuteTime <= 614) {
+                        document.getElementById("currentClass").innerHTML = "Period 3 | 9:18 - 10:14" 
+                        minutesLeft = minuteTime - 614
+                        globalClass = "3"
+                    } else if (minuteTime > 614 && minuteTime < 622) {
+                        document.getElementById("currentClass").innerHTML = "Period 4 Transition | 10:14 - 10:22" 
+                        minutesLeft = minuteTime - 622
+                        globalClass = "Transition"
+                    } else if (minuteTime >= 622 && minuteTime <= 678) {
+                        document.getElementById("currentClass").innerHTML = "Period 4 | 10:22 - 11:18" 
+                        minutesLeft = minuteTime - 678
+                        globalClass = "4"
+                    } else if (minuteTime > 678 && minuteTime < 683) {
+                        document.getElementById("currentClass").innerHTML = "Period 5 Transition | 11:18 - 11:23" 
+                        minutesLeft = minuteTime - 683
+                        globalClass = "Transition"
+                    } else if (minuteTime > 683 && minuteTime < 739) {
+                        document.getElementById("currentClass").innerHTML = "Period 5 | 11:23 - 12:19 (AM - PM)" 
+                        minutesLeft = minuteTime - 739
+                        globalClass = "5"
+                    } else if (minuteTime >= 739 && minuteTime <= 786) {
+                        document.getElementById("currentClass").innerHTML = "Lunch | 12:19 - 1:06" 
+                        minutesLeft = minuteTime - 786
+                        globalClass = "Lunch"
+                    } else if (minuteTime >= 786 && minuteTime <= 794) {
+                        document.getElementById("currentClass").innerHTML = "Period 6 Transition | 1:06 - 1:14" 
+                        minutesLeft = minuteTime - 794
+                        globalClass = "Transition"
+                    } else if (minuteTime >= 794 && minuteTime < 850) {
+                        document.getElementById("currentClass").innerHTML = "Period 6 | 1:14 - 2:10" 
+                        minutesLeft = minuteTime - 850
+                        globalClass = "6"
+                    } else if (minuteTime >= 850) {
+                        document.getElementById("currentClass").innerHTML = "After School | 2:10 - 11:59" 
+                        minutesLeft = minuteTime - 1439
+                        globalClass = "None"
+                    }
+
+                if (Math.abs(minutesLeft) === 1) {
+                    document.getElementById("left").innerHTML = Math.abs(minutesLeft) + " Minute Left"
+                } else {
+                    document.getElementById("left").innerHTML = Math.abs(minutesLeft) + " Minutes Left"
+                }
+            }
+    </script>
+
+    <p class="time", id="time">
+        Loading Time...
+    </p>
+    <p class="date", id="fullDate">
+        Loading...
+    </p>
+    <p>&nbsp;</p>
+    <p class="period" id="currentClass">
+        Loading...
+    </p>
+    <p class="left" id="left">
+        Loading...
+    </p>
+    <p>&nbsp;</p>
+    <p>
+        D-Day Time Calculator
+    </p>
+    <p>
+        Created by Jadon Duff
+    </p>
+</html>
